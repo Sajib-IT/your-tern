@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "760828964815",
+    "project_id": "tea-checker",
+    "storage_bucket": "tea-checker.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760828964815:android:da19a7c93933c62699ecba",
+        "android_client_info": {
+          "package_name": "com.example.tea_checker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0bMTh7XWj4DBBaLRY84hX-w_eZxhx5Z4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
