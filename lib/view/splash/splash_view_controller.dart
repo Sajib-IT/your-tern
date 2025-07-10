@@ -16,7 +16,7 @@ class SplashViewController extends GetxController {
     await Future.delayed(const Duration(seconds: 3));
     User? user = supabase.auth.currentUser;
     if (user != null && user.emailConfirmedAt != null) {
-      print(user);
+      // print(user);
       print(user.emailConfirmedAt);
       Get.off(() => TabsView());
     } else {

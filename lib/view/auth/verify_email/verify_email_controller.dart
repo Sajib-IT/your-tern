@@ -12,10 +12,8 @@ class VerifyEmailController extends GetxController {
     if (Get.arguments != null) {
       email = Get.arguments;
     }
-    // Future.delayed(Duration(seconds: 2));
     print(email);
-   await supabase.auth.signInWithOtp(email: email);
-   // await resendVerificationEmail(email);
+   // await supabase.auth.signInWithOtp(email: email);
     super.onInit();
   }
 

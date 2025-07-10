@@ -1,31 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tea_checker/model/user_model.dart';
 import 'package:tea_checker/view/tabs/dashboard/dashboard_view.dart';
 import 'package:tea_checker/widget/bottom_nav_bar/tab_item.dart';
 
 class TabsController extends GetxController {
   RxInt tabIndex = RxInt(0);
   RxString appbarTitle = RxString("Dashboard");
+  Rxn<UserModel> userModel = Rxn<UserModel>();
+  final supabase = Supabase.instance.client;
+  @override
+  void onInit() async {
+    pages = getTabItems();
+    await fetchUsers();
+    super.onInit();
+  }
 
-  List<TabItem> pages = [
-    TabItem(title: "Dashboard", icon: Icons.dashboard, page: DashboardView()),
+  Future<void> fetchUsers() async {
+    final response = await supabase
+        .from('user') // your table name
+        .select()
+        .eq("userId", supabase.auth.currentUser!.id);
+    print(response);
+    userModel.value = UserModel.fromJson(response[0]);
+    print(userModel.value!.fullName);
+    // userModel =  response.map((item) => UserModel.fromJson(item)).toList();
+  }
 
-    TabItem(
-      title: "Groups",
-      icon: Icons.group,
-      page: Center(child: Text("ALl Doctors")),
-    ),
-    TabItem(
-      title: "Notification",
-      icon: Icons.notifications,
-      page: Center(child: Text("ALl PTEiNES FOR DOCTOR")),
-    ),
-    TabItem(
-      title: "Profile",
-      icon: Icons.person,
-      page: Center(child: Text("profile")),
-    ),
-  ];
+  List<TabItem> pages = [];
+
+  List<TabItem> getTabItems() {
+    return [
+      TabItem(title: "Dashboard", icon: Icons.dashboard, page: DashboardView()),
+
+      TabItem(
+        title: "Groups",
+        icon: Icons.group,
+        page: Center(child: Text("ALl Doctors")),
+      ),
+      TabItem(
+        title: "Notification",
+        icon: Icons.notifications,
+        page: Center(child: Text("ALl PTEiNES FOR DOCTOR")),
+      ),
+      TabItem(
+        title: "Profile",
+        icon: Icons.person,
+        page: Center(child: Text("profile")),
+      ),
+    ];
+  }
 
   void changeTabIndex(int index) {
     tabIndex.value = index;

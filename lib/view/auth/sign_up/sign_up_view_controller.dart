@@ -96,10 +96,10 @@ class SignUpViewController extends GetxController {
     validateForm();
   }
 
-  Future<void> createUser() async {
+  Future<void> createUser(String uid) async {
     height.value = "${feet.value} feet ${inch.value} inch";
     userModel = UserModel(
-      userId: "01",
+      userId: uid,
       fullName: fullNameController.text,
       email: emailController.text,
       role: "user",
@@ -115,9 +115,16 @@ class SignUpViewController extends GetxController {
       password: passwordController.text,
       profileImageUrl: null,
     );
+    Map<String, dynamic> userModelJson = userModel.toJson();
+    try {
+      final res = await supabase.from("user").insert(userModelJson);
+      print("res $res");
+    } catch (e) {
+      print(e);
+    }
 
-    // Map<String, dynamic> userModelJson = userModel.toJson();
     log(userModel.userId);
+    log(userModel.fullName);
     // try {
     //   await firestore
     //       .collection('user')
@@ -131,8 +138,14 @@ class SignUpViewController extends GetxController {
 
   void signUp() async {
     EasyLoading.show(status: "Loading...");
-    await createUser();
-    await AuthService().signUp(userModel);
+    AuthResponse authResponse = await supabase.auth.signUp(
+      email: emailController.text,
+      password: passwordController.text,
+      // emailRedirectTo: 'io.supabase.flutter://login-callback/',
+      // data: userModel.toJson(),
+    );
+    print(authResponse.user?.email);
+    await createUser(authResponse.user!.id);
     EasyLoading.dismiss();
     print(supabase.auth.currentUser?.emailConfirmedAt);
     if (supabase.auth.currentUser?.emailConfirmedAt == null) {
