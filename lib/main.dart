@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tea_checker/view/splash/splash_view.dart';
 import 'package:tea_checker/utils/color_utils.dart';
 import 'package:tea_checker/view/tabs/tabs_view.dart';
 import 'firebase_options.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TabsView(),
+      home: SplashView(),
 
       builder: EasyLoading.init(),
     );
