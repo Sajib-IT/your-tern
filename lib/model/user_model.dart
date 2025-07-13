@@ -4,7 +4,7 @@ UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
-  final String userId;
+  final String id;
   final String role;              // super_admin, admin, doctor, patient
   final String fullName;
   final String email;
@@ -25,7 +25,7 @@ class UserModel {
   final bool isActive;        // e.g., "A+", "O-", etc.
 
   UserModel({
-    required this.userId,
+    required this.id,
     required this.role,
     required this.fullName,
     required this.email,
@@ -47,7 +47,7 @@ class UserModel {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    userId: json["userId"],
+    id: json["id"],
     role: json["role"],
     fullName: json["fullName"],
     email: json["email"],
@@ -69,7 +69,7 @@ class UserModel {
   );
 
   Map<String, dynamic> toJson() => {
-    "userId": userId,
+    "id": id,
     "role": role,
     "fullName": fullName,
     "email": email,

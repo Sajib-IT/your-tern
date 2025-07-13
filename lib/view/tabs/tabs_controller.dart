@@ -5,6 +5,8 @@ import 'package:tea_checker/model/user_model.dart';
 import 'package:tea_checker/view/tabs/dashboard/dashboard_view.dart';
 import 'package:tea_checker/widget/bottom_nav_bar/tab_item.dart';
 
+import 'group/my_groups_view.dart';
+
 class TabsController extends GetxController {
   RxInt tabIndex = RxInt(0);
   RxString appbarTitle = RxString("Dashboard");
@@ -19,9 +21,9 @@ class TabsController extends GetxController {
 
   Future<void> fetchUsers() async {
     final response = await supabase
-        .from('user') // your table name
+        .from('users') // your table name
         .select()
-        .eq("userId", supabase.auth.currentUser!.id);
+        .eq("id", supabase.auth.currentUser!.id);
     print(response);
     userModel.value = UserModel.fromJson(response[0]);
     print(userModel.value!.fullName);
@@ -35,9 +37,10 @@ class TabsController extends GetxController {
       TabItem(title: "Dashboard", icon: Icons.dashboard, page: DashboardView()),
 
       TabItem(
-        title: "Groups",
+        title: "My Groups",
         icon: Icons.group,
-        page: Center(child: Text("ALl Doctors")),
+        // page: Center(child: Text("ALl Doctors")),
+        page: MyGroupsView(),
       ),
       TabItem(
         title: "Notification",

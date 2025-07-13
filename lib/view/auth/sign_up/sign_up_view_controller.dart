@@ -99,7 +99,7 @@ class SignUpViewController extends GetxController {
   Future<void> createUser(String uid) async {
     height.value = "${feet.value} feet ${inch.value} inch";
     userModel = UserModel(
-      userId: uid,
+      id: uid,
       fullName: fullNameController.text,
       email: emailController.text,
       role: "user",
@@ -117,13 +117,13 @@ class SignUpViewController extends GetxController {
     );
     Map<String, dynamic> userModelJson = userModel.toJson();
     try {
-      final res = await supabase.from("user").insert(userModelJson);
+      final res = await supabase.from("users").insert(userModelJson);
       print("res $res");
     } catch (e) {
       print(e);
     }
 
-    log(userModel.userId);
+    log(userModel.id);
     log(userModel.fullName);
     // try {
     //   await firestore
