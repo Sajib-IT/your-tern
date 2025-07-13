@@ -9,11 +9,6 @@ import 'package:tea_checker/widget/dialog/customiseable_base_dialog.dart';
 
 class GroupMembersView extends StatelessWidget {
   final GroupMembersController _controller = Get.put(GroupMembersController());
-  // final String groupId;
-  // final String title;
-  // final bool isAdmin;
-  // final MyGroupController groupController = Get.find();
-  // final UserController userController = Get.find();
 
   GroupMembersView({super.key});
 
