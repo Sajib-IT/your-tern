@@ -1,3 +1,4 @@
+import 'package:any_image_view/any_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:tea_checker/utils/color_utils.dart';
 
@@ -15,10 +16,20 @@ class MemberDetailsView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text('Member Details')),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            // ClipOval(
+            //   child: AnyImageView(
+            //     imagePath: 'assets/logo/logo.png',
+            //     height: 80,
+            //     width: 80,
+            //     shape: BoxShape.circle,
+            //     // onTap: () => _showProfileDetails(),
+            //   ),
+            // ),
+
             ClipOval(
               child: SizedBox(
                 width: 90,
@@ -38,7 +49,10 @@ class MemberDetailsView extends StatelessWidget {
               ),
             ),
             SizedBox(height: 8),
-            Text(getValue('fullName'),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+            Text(
+              getValue('fullName'),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             SizedBox(height: 16),
             Card(
               color: ColorUtils.cardSurface,
@@ -52,7 +66,10 @@ class MemberDetailsView extends StatelessWidget {
                   _buildRow("Blood Group", getValue('bloodGroup')),
                   _buildRow("Date of Birth", getValue('dateOfBirth')),
                   _buildRow("Present Address", getValue('presentAddress')),
-                  _buildRow("Permanent Address", getValue('permanentAddress')),
+                  _buildRow(
+                    "Permanent Address",
+                    getValue('permanentAddress'),
+                  ),
                   _buildRow("Height", getValue('height')),
                   _buildRow("Weight", getValue('weight')),
                   _buildRow("Active", getValue('isActive')),
