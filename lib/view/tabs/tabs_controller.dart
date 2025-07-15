@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tea_checker/model/user_model.dart';
 import 'package:tea_checker/view/tabs/dashboard/dashboard_view.dart';
+import 'package:tea_checker/view/tabs/profile/profile_view.dart';
 import 'package:tea_checker/widget/bottom_nav_bar/tab_item.dart';
 
 import 'group/my_groups_view.dart';
@@ -50,7 +51,7 @@ class TabsController extends GetxController {
       TabItem(
         title: "Profile",
         icon: Icons.person,
-        page: Center(child: Text("profile")),
+        page: ProfileView(roll: 'patient'),
       ),
     ];
   }
