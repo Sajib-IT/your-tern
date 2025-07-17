@@ -28,11 +28,12 @@ class EditProfileView extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () async {
+
                 await DocumentOptionDialog().show(
                   callback: (value) {
                     _controller.documentToUpload.value = value;
                     if (_controller.documentToUpload.value != null) {
-                      _controller.saveProfileImageToFireStore();
+                      _controller.uploadProfileImageToBucket();
                     }
                   },
                 );

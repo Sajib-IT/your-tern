@@ -153,26 +153,46 @@ class ProfileController extends GetxController {
     EasyLoading.dismiss();
   }
 
-  Future<void> saveProfileImageToFireStore() async {
-    // EasyLoading.show(status: "Loading...");
-    // String profileUrl = await uploadProfileImage(documentToUpload.value!);
-    // user.value!.profileImageUrl = profileUrl;
-    // await FirebaseFirestore.instance.collection('user').doc(uid).update({
-    //   "profileImageUrl": documentToUpload.value != null ? profileUrl : null,
-    // });
-    // EasyLoading.dismiss();
+  Future<void> uploadProfileImageToBucket() async {
+    print("authen ${supabase.auth.currentUser!.emailConfirmedAt}");
+    print("authen ${supabase.auth.currentUser!.aud}");
+    print("authen ${supabase.auth.currentSession}");
+    EasyLoading.show(status: "Loading...");
+    // Upload to storage
+    final file = documentToUpload.value;
+    // final fileExt = extension(file?.path); // e.g., .jpg
+    final fileBytes = file!.readAsBytes();
+    final fileName = '${DateTime.now().millisecondsSinceEpoch}${file.path}';
+    final filePath = 'images/${fileName.split("/").last}';
+    final storageResponse = await supabase.storage
+        .from('profiles') // your bucket name
+        .updateBinary(filePath, await fileBytes,fileOptions: FileOptions(upsert: true));
+
+    if (storageResponse.isEmpty) {
+      print("Upload failed");
+      EasyLoading.dismiss();
+      return;
+    }
+    await uploadProfileImage(filePath);
+    EasyLoading.dismiss();
   }
 
-  Future<String> uploadProfileImage(File imageFile) async {
-    // String path = imageFile.path.split('/').last;
-    // if (kDebugMode) {
-    //   print("dj path $path");
-    // }
-    // final storageRef =
-    //     FirebaseStorage.instance.ref().child('profileImage/$path');
-    // await storageRef.putFile(imageFile);
-    // final downloadURL = await storageRef.getDownloadURL();
-    // return downloadURL;
+  Future<String> uploadProfileImage(String filePath) async {
+    final userId = supabase.auth.currentUser!.id;
+    // Get Public URL
+    final imageUrl = supabase.storage.from('profiles').getPublicUrl(filePath);
+
+    // Update user table
+    final response = await supabase
+        .from('users')
+        .update({'profileImageUrl': imageUrl})
+        .eq('id', userId);
+
+    if (response != null) {
+      print("Failed to update user: ${response.error!.message}");
+    } else {
+      print("User updated with image URL: $imageUrl");
+    }
     return '';
   }
 
