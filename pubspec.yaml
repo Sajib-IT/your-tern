@@ -43,6 +43,7 @@ dependencies:
   fluttertoast:
   permission_handler:
   dropdown_button2:
+  carousel_slider:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -54,6 +55,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.14.4"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo/app_logo.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

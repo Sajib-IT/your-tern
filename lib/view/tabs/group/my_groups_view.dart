@@ -56,12 +56,12 @@ class MyGroupsView extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => _showCreateGroupDialog(context),
+        onPressed: () => showCreateGroupDialog(context),
       ),
     );
   }
 
-  void _showCreateGroupDialog(BuildContext context) {
+  void showCreateGroupDialog(BuildContext context) {
     final nameController = TextEditingController();
     final descriptionController = TextEditingController();
 

@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tea_checker/utils/color_utils.dart';
 import 'package:tea_checker/view/auth/sign_in/sign_in_view.dart';
+import 'package:tea_checker/view/tabs/group/my_groups_view.dart';
 import 'package:tea_checker/view/tabs/tabs_controller.dart';
+import 'package:tea_checker/widget/dialog/alert_custom_dialog.dart';
 
 class DrawerView extends StatelessWidget {
   final TabsController _tabsController = Get.find();
@@ -50,7 +52,9 @@ class DrawerView extends StatelessWidget {
                 leading: Icon(Icons.group_add, color: ColorUtils.primary),
                 title: Text("Create Group", style: TextStyle(fontSize: 16)),
                 onTap: () {
-                  // Get.back();
+                  Get.back();
+                  _tabsController.changeTabIndex(1);
+                  MyGroupsView().showCreateGroupDialog(context);
                   // Get.to(() => AdminFeedback());
                 },
               ),
@@ -58,15 +62,20 @@ class DrawerView extends StatelessWidget {
                 leading: Icon(Icons.history, color: ColorUtils.primary),
                 title: Text("History", style: TextStyle(fontSize: 16)),
                 onTap: () {
-                  // Get.back();
+                  Get.back();
+                  AlertCustomDialogs().showAlert(
+                    msg:
+                        "Coming Soon...\nWe're working hard to bring you something awesome. Stay tuned!",
+                  );
                   // Get.to(() => SearchHistoryView());
                 },
               ),
               ListTile(
                 leading: Icon(Icons.group, color: ColorUtils.primary),
-                title: Text("Group", style: TextStyle(fontSize: 16)),
+                title: Text("My Groups", style: TextStyle(fontSize: 16)),
                 onTap: () {
-                  // Get.back();
+                  Get.back();
+                  _tabsController.changeTabIndex(1);
                   // Get.to(() => AdminFeedback());
                 },
               ),
@@ -74,33 +83,38 @@ class DrawerView extends StatelessWidget {
                 leading: Icon(Icons.help, color: ColorUtils.primary),
                 title: Text("Help", style: TextStyle(fontSize: 16)),
                 onTap: () {
-                  // Get.back();
+                  Get.back();
+                  AlertCustomDialogs().showAlert(
+                    msg:
+                    "Coming Soon...\nWe're working hard to bring you something awesome. Stay tuned!",
+                  );
                   // Get.to(() => BrowseInfoView());
                 },
               ),
 
-              ListTile(
-                leading: Icon(Icons.feedback, color: ColorUtils.primary),
-                title: Text("Send Feedback", style: TextStyle(fontSize: 16)),
-                onTap: () {
-                  // Handle Request tap
-                  // Get.back();
-                  // Get.to(() => UserFeedback());
-                  // Navigator.pop(context);
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //    SnackBar(content: Text("Request clicked")),
-                  // );
-                },
-              ),
+              // ListTile(
+              //   leading: Icon(Icons.feedback, color: ColorUtils.primary),
+              //   title: Text("Send Feedback", style: TextStyle(fontSize: 16)),
+              //   onTap: () {
+              //     // Handle Request tap
+              //     // Get.back();
+              //     // Get.to(() => UserFeedback());
+              //     // Navigator.pop(context);
+              //     // ScaffoldMessenger.of(context).showSnackBar(
+              //     //    SnackBar(content: Text("Request clicked")),
+              //     // );
+              //   },
+              // ),
               ListTile(
                 leading: Icon(Icons.feed, color: ColorUtils.primary),
                 title: Text("About us", style: TextStyle(fontSize: 16)),
                 onTap: () {
                   // Handle Contact tap
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text("Contact clicked")));
+                  Get.back();
+                  AlertCustomDialogs().showAlert(
+                    msg:
+                    "Coming Soon...\nWe're working hard to bring you something awesome. Stay tuned!",
+                  );
                 },
               ),
               ListTile(
