@@ -56,14 +56,14 @@ class GroupMembersController extends GetxController {
 
       await getGroupMembers(groupId);
     } on PostgrestException catch (e) {
-      if(e.code == "23505"){
+      if (e.code == "23505") {
         isExist.value = true;
-        AlertCustomDialogs().showAlert(msg: "The member already exists in the group.");
+        AlertCustomDialogs().showAlert(
+          msg: "The member already exists in the group.",
+        );
       }
-
     }
   }
-
 
   // Future<void> addUserToGroup(String groupId, String userId) async {
   //   await supabase.from('group_members').insert({
@@ -74,7 +74,12 @@ class GroupMembersController extends GetxController {
   //   await getGroupMembers(groupId);
   // }
 
-  Future<void> updateUserSerialNoToGroup(String groupId, String userId) async {
+  Future<void> updateUserSerialNoToGroup(
+    String groupId,
+    String userId, {
+    required bool isActive,
+    required String nextUserId,
+  }) async {
     isLoading.value = true;
     final response = await supabase
         .from('group_members')
@@ -84,6 +89,17 @@ class GroupMembersController extends GetxController {
         })
         .eq('group_id', groupId)
         .eq('user_id', userId);
+    if (!isActive) {
+      final response = await supabase
+          .from('group_members')
+          .update({
+            'serialNo':
+                await getTotalCount(groupId) +
+                await getCurrentSerialNo(groupId),
+          })
+          .eq('group_id', groupId)
+          .eq('user_id', nextUserId);
+    }
     await getGroupMembers(groupId);
   }
 

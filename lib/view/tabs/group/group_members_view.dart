@@ -40,14 +40,14 @@ class GroupMembersView extends StatelessWidget {
                       color:
                           index == 0
                               ? Colors.green.shade100
-                              : index == 1
+                              : index == 1 && user['isActive']
                               ? Colors.orange.shade100
                               : Colors.white70,
                       child: ListTile(
                         onTap: () {
                           Get.to(() => MemberDetailsView(user: user));
                         },
-                        // enabled: user['isActive'],
+                        enabled: user['isActive'],
                         title: Text(user['fullName'] ?? ''),
                         subtitle: Text(user['email']),
                         trailing:
@@ -59,7 +59,7 @@ class GroupMembersView extends StatelessWidget {
                                       visualDensity: VisualDensity.compact,
                                       icon: Icon(
                                         Icons.delete,
-                                        color: Colors.red,
+                                        color: !members[index]['isActive'] ?Colors.grey :Colors.red,
                                       ),
                                       onPressed:
                                           () => _controller.removeUserFromGroup(
@@ -73,10 +73,14 @@ class GroupMembersView extends StatelessWidget {
                                         icon: Icon(
                                           index == 0
                                               ? Icons.task_alt_rounded
-                                              : Icons.next_plan_outlined,
+                                              : !members[index]['isActive'] ?
+                                              Icons.person_off :
+                                          Icons.next_plan_outlined,
                                           color:
                                               index == 0
-                                                  ? Colors.green
+                                                  ? Colors.green :
+                                              !members[index]['isActive'] ?
+                                                  Colors.grey
                                                   : Colors.orange,
                                         ),
                                         onPressed:
@@ -85,6 +89,10 @@ class GroupMembersView extends StatelessWidget {
                                                     .updateUserSerialNoToGroup(
                                                       _controller.groupId,
                                                       user['id'],
+                                                      isActive:
+                                                          members[1]['isActive'],
+                                                      nextUserId:
+                                                          members[1]['id'],
                                                     )
                                                 : null,
                                       ),
@@ -243,8 +251,7 @@ class GroupMembersView extends StatelessWidget {
                           _controller.groupId,
                           _controller.selectedUserId.value!,
                         );
-                        if(!_controller.isExist.value)
-                                Get.back();
+                        if (!_controller.isExist.value) Get.back();
                       }
                     },
                     child: Text(
