@@ -56,7 +56,6 @@ class GroupMembersController extends GetxController {
 
       await getGroupMembers(groupId);
     } on PostgrestException catch (e) {
-      print("nooo ${e.code}");
       if(e.code == "23505"){
         isExist.value = true;
         AlertCustomDialogs().showAlert(msg: "The member already exists in the group.");
@@ -81,7 +80,7 @@ class GroupMembersController extends GetxController {
         .from('group_members')
         .update({
           'serialNo':
-              await getMaxSerialNo(groupId) + await getCurrentSerialNo(groupId),
+              await getTotalCount(groupId) + await getCurrentSerialNo(groupId),
         })
         .eq('group_id', groupId)
         .eq('user_id', userId);
@@ -142,7 +141,7 @@ class GroupMembersController extends GetxController {
             .select('*')
             .eq('group_id', groupId)
             .count();
-
+    print(response.count);
     return response.count ?? 0;
   }
 
@@ -156,7 +155,7 @@ class GroupMembersController extends GetxController {
             .order('serialNo', ascending: false)
             .limit(1)
             .single();
-
+    print(response['serialNo']);
     return response['serialNo'] ?? 0;
   }
 
@@ -181,11 +180,11 @@ class GroupMembersController extends GetxController {
             .from('group_members')
             .select('serialNo')
             .eq('group_id', groupId)
-            .eq('user_id', supabase.auth.currentUser!.id)
+            // .eq('user_id', supabase.auth.currentUser!.id)
             .order('serialNo', ascending: true)
             .limit(1)
             .single();
-
+    print(response['serialNo']);
     return response['serialNo'] ?? 0;
   }
 }

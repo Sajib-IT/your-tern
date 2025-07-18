@@ -30,7 +30,7 @@ class ProfileController extends GetxController {
       TextEditingController();
 
   RxnString selectedGender = RxnString();
-  RxString selectedActive = RxString('Yes');
+  RxnString selectedActive = RxnString();
   List<String> genderList = ['Male', 'Female', 'Other'];
   RxnString selectedBloodGroup = RxnString();
   List<String> bloodGroupList = [
@@ -110,6 +110,7 @@ class ProfileController extends GetxController {
     inch.value = int.parse(height[2]);
     weightController.text = splitWeight[0];
     weight.value = int.parse(splitWeight[0]);
+    selectedActive.value = user.value!['isActive'] ? 'Yes' : "No";
     presentAddressController.text = user.value!['presentAddress'];
     permanentAddressController.text = user.value!['permanentAddress'];
     EasyLoading.dismiss();

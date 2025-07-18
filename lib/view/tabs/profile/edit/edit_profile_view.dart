@@ -209,7 +209,7 @@ class EditProfileView extends StatelessWidget {
             // ),
             YesNoRadio(title: "Are you Active ?",onChanged: (v){
              _controller.selectedActive.value = v;
-            },),
+            }, selectedValue: _controller.selectedActive.value!,),
             UIHelper().columTitleWithWidget(
               title: 'Present Address *',
               widget: MyTextField(

@@ -3,16 +3,17 @@ import 'package:tea_checker/utils/color_utils.dart';
 
 class YesNoRadio extends StatefulWidget {
   final String title;
+    String selectedValue;
   final void Function(String)? onChanged;
 
-  const YesNoRadio({super.key, required this.title, this.onChanged});
+   YesNoRadio({super.key, required this.title, this.onChanged, required this.selectedValue});
 
   @override
   _YesNoRadioState createState() => _YesNoRadioState();
 }
 
 class _YesNoRadioState extends State<YesNoRadio> {
-  String? selectedValue = 'Yes';
+  // String? selectedValue = 'Yes';
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +33,19 @@ class _YesNoRadioState extends State<YesNoRadio> {
                 decoration: BoxDecoration(
                   border: Border.all(
                     color:
-                        selectedValue == "Yes"
+                        widget.selectedValue == "Yes"
                             ? ColorUtils.primary
                             : Colors.grey,
                   ),
-                  color: selectedValue == "Yes" ? ColorUtils.background : null,
+                  color: widget.selectedValue == "Yes" ? ColorUtils.background : null,
                 ),
                 child: RadioListTile<String>(
                   visualDensity: VisualDensity.compact,
                   title: const Text('Yes'),
                   value: 'Yes',
-                  groupValue: selectedValue,
+                  groupValue: widget.selectedValue,
                   onChanged: (value) {
-                    setState(() => selectedValue = value);
+                    setState(() => widget.selectedValue = value!);
                     widget.onChanged?.call(value!);
                   },
                 ),
@@ -56,19 +57,19 @@ class _YesNoRadioState extends State<YesNoRadio> {
                 decoration: BoxDecoration(
                   border: Border.all(
                     color:
-                        selectedValue == "No"
+                    widget.selectedValue == "No"
                             ? ColorUtils.primary
                             : Colors.grey,
                   ),
-                  color: selectedValue == "No" ? ColorUtils.background : null,
+                  color: widget.selectedValue == "No" ? ColorUtils.background : null,
                 ),
                 child: RadioListTile<String>(
                   visualDensity: VisualDensity.compact,
                   title: const Text('No'),
                   value: 'No',
-                  groupValue: selectedValue,
+                  groupValue: widget.selectedValue,
                   onChanged: (value) {
-                    setState(() => selectedValue = value);
+                    setState(() => widget.selectedValue = value!);
                     widget.onChanged?.call(value!);
                   },
                 ),
