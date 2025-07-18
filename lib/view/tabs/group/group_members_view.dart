@@ -179,41 +179,6 @@ class GroupMembersView extends StatelessWidget {
                   ),
                   // Add more decoration..
                 ),
-                // dropdownSearchData: DropdownSearchData(
-                //   searchController: searchController,
-                //   searchInnerWidgetHeight: 50,
-                //   searchInnerWidget: Container(
-                //     height: 50,
-                //     padding: const EdgeInsets.only(
-                //       top: 8,
-                //       bottom: 4,
-                //       right: 8,
-                //       left: 8,
-                //     ),
-                //     child: TextFormField(
-                //       expands: true,
-                //       maxLines: null,
-                //       controller: searchController,
-                //       decoration: InputDecoration(
-                //         isDense: true,
-                //         contentPadding: const EdgeInsets.symmetric(
-                //           horizontal: 10,
-                //           vertical: 8,
-                //         ),
-                //         hintText: 'Search for an member...',
-                //         hintStyle: const TextStyle(fontSize: 12),
-                //         border: OutlineInputBorder(
-                //           borderRadius: BorderRadius.circular(8),
-                //         ),
-                //       ),
-                //
-                //     ),
-                //   ),
-                //   // searchMatchFn: (item, searchValue) {
-                //   //   print(item.value);
-                //   //   return item.value.toString().contains(searchValue);
-                //   // },
-                // ),
                 hint: Text(
                   'Select Member',
                   style: const TextStyle(
@@ -278,7 +243,8 @@ class GroupMembersView extends StatelessWidget {
                           _controller.groupId,
                           _controller.selectedUserId.value!,
                         );
-                        Get.back();
+                        if(!_controller.isExist.value)
+                                Get.back();
                       }
                     },
                     child: Text(

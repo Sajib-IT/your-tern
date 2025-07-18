@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tea_checker/widget/dialog/alert_custom_dialog.dart';
 
 class GroupMembersController extends GetxController {
   final SupabaseClient supabase = Supabase.instance.client;
@@ -9,6 +10,7 @@ class GroupMembersController extends GetxController {
   RxnString selectedUserId = RxnString();
   RxBool isLoading = RxBool(false);
   RxBool isAdmin = RxBool(false);
+  RxBool isExist = RxBool(false);
   final allUsers = <Map<String, dynamic>>[].obs;
   final userGroups = <Map<String, dynamic>>[].obs;
   final groups = <Map<String, dynamic>>[].obs;
@@ -44,13 +46,34 @@ class GroupMembersController extends GetxController {
   // }
 
   Future<void> addUserToGroup(String groupId, String userId) async {
-    await supabase.from('group_members').insert({
-      'group_id': groupId,
-      'user_id': userId,
-      'serialNo': await getMaxSerialNo(groupId) + 1,
-    });
-    await getGroupMembers(groupId);
+    try {
+      isExist.value = false;
+      await supabase.from('group_members').insert({
+        'group_id': groupId,
+        'user_id': userId,
+        'serialNo': await getMaxSerialNo(groupId) + 1,
+      });
+
+      await getGroupMembers(groupId);
+    } on PostgrestException catch (e) {
+      print("nooo ${e.code}");
+      if(e.code == "23505"){
+        isExist.value = true;
+        AlertCustomDialogs().showAlert(msg: "The member already exists in the group.");
+      }
+
+    }
   }
+
+
+  // Future<void> addUserToGroup(String groupId, String userId) async {
+  //   await supabase.from('group_members').insert({
+  //     'group_id': groupId,
+  //     'user_id': userId,
+  //     'serialNo': await getMaxSerialNo(groupId) + 1,
+  //   });
+  //   await getGroupMembers(groupId);
+  // }
 
   Future<void> updateUserSerialNoToGroup(String groupId, String userId) async {
     isLoading.value = true;
