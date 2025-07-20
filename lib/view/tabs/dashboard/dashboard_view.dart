@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tea_checker/utils/color_utils.dart';
 import 'package:tea_checker/view/tabs/dashboard/dashboard_controller.dart';
 
 class DashboardView extends StatelessWidget {
@@ -14,7 +15,7 @@ class DashboardView extends StatelessWidget {
         padding: EdgeInsets.all(16),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Column(
               children: [
@@ -117,54 +118,72 @@ class DashboardView extends StatelessWidget {
             //     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             //   ),
             // ),
-            runningTasks(_controller.groupNames)
-          ],
-        ),
-      ),
-    );
-  }
-  
-  Widget runningTasks(List<String> groupNames) {
-    return Card(
-      // margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 32),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Your Running Tasks",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.teal[700],
-              ),
-            ),
-            const SizedBox(height: 12),
-            ...groupNames.map(
-                  (item) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
-                child: Row(
-                  children: [
-                    const Icon(Icons.group, size: 20, color: Colors.teal),
-                    const SizedBox(width: 8),
-                    Text(
-                      item,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            runningTasks(_controller.groupNames),
           ],
         ),
       ),
     );
   }
 
+  Widget runningTasks(List<String> groupNames) {
+    return Obx(
+      () =>
+          !_controller.isLoading.value
+              ? Card(
+                // margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 32,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Your Running Tasks",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.teal[700],
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      ...groupNames.map(
+                        (item) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.group,
+                                size: 20,
+                                color: Colors.teal,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+              : Padding(
+                padding: const EdgeInsets.all(58.0),
+                child: Center(
+                  child: CircularProgressIndicator(color: ColorUtils.primary),
+                ),
+              ),
+    );
+  }
 }

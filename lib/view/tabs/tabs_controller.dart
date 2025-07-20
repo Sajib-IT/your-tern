@@ -46,7 +46,7 @@ class TabsController extends GetxController {
       TabItem(
         title: "Notification",
         icon: Icons.notifications,
-        page: Center(child: Text("ALl PTEiNES FOR DOCTOR")),
+        page: Center(child: Text("Coming soon")),
       ),
       TabItem(
         title: "Profile",

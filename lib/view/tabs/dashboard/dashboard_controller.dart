@@ -76,6 +76,7 @@ class DashboardController extends GetxController {
       // return [];
     } catch (e) {
       print('Error fetching groups: $e');
+      isLoading.value = false;
       // return groupNames;
     }
     isLoading.value = false;
