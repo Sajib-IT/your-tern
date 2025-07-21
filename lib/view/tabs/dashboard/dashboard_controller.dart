@@ -8,7 +8,6 @@ class DashboardController extends GetxController {
   List<String> groupNames = [];
   @override
   void onInit() async {
-    // print("groupNmae ${await getGroupsWhereUserHasMinSerial(supabase.auth.currentUser!.id)}");
     await getGroupsWhereUserHasMinSerial(supabase.auth.currentUser!.id);
     print("groupNmae ${groupNames}");
     super.onInit();
