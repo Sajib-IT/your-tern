@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:tea_checker/utils/color_utils.dart';
 import 'package:tea_checker/view/tabs/group/group_members_controller.dart';
 import 'package:tea_checker/view/tabs/group/widget/member_details_view.dart';
+import 'package:tea_checker/widget/dialog/confirmation_dialog.dart';
 import 'package:tea_checker/widget/dialog/customiseable_base_dialog.dart';
 
 class GroupMembersView extends StatelessWidget {
@@ -59,13 +60,21 @@ class GroupMembersView extends StatelessWidget {
                                       visualDensity: VisualDensity.compact,
                                       icon: Icon(
                                         Icons.delete,
-                                        color: !members[index]['isActive'] ?Colors.grey :Colors.red,
+                                        color:
+                                            !members[index]['isActive']
+                                                ? Colors.grey
+                                                : Colors.red,
                                       ),
-                                      onPressed:
-                                          () => _controller.removeUserFromGroup(
-                                            _controller.groupId,
-                                            user['id'],
-                                          ),
+                                      onPressed: () {
+                                        ConfirmationDialog().showDelete(
+                                          function: () {
+                                            _controller.removeUserFromGroup(
+                                              _controller.groupId,
+                                              user['id'],
+                                            );
+                                          },
+                                        );
+                                      },
                                     ),
                                     if (index == 0 || index == 1)
                                       IconButton(
@@ -73,14 +82,14 @@ class GroupMembersView extends StatelessWidget {
                                         icon: Icon(
                                           index == 0
                                               ? Icons.task_alt_rounded
-                                              : !members[index]['isActive'] ?
-                                              Icons.person_off :
-                                          Icons.next_plan_outlined,
+                                              : !members[index]['isActive']
+                                              ? Icons.person_off
+                                              : Icons.next_plan_outlined,
                                           color:
                                               index == 0
-                                                  ? Colors.green :
-                                              !members[index]['isActive'] ?
-                                                  Colors.grey
+                                                  ? Colors.green
+                                                  : !members[index]['isActive']
+                                                  ? Colors.grey
                                                   : Colors.orange,
                                         ),
                                         onPressed:
